@@ -1,0 +1,16 @@
+language: generic
+sudo: required
+services:
+  -docker
+
+before_install:
+  - docker build -t xantko/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true xantko/react-test npm test
+
+after_success:
+  - docker build -t xantko/multi-client ./client
+  - docker build -t xantko/multi-nginx ./nginx
+  - docker build -t xantko/multi-server ./server
+  - docker build -t xantko/multi-worker ./worker
