@@ -14,3 +14,8 @@ after_success:
   - docker build -t xantko/multi-nginx ./nginx
   - docker build -t xantko/multi-server ./server
   - docker build -t xantko/multi-worker ./worker
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push xantko/multi-client
+  - docker push xantko/multi-nginx
+  - docker push xantko/multi-server
+  - docker push xantko/multi-worker
